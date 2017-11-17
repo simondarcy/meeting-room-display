@@ -1,0 +1,61 @@
+@font-face {
+    font-family: Graphik;
+    src: url("fonts/Graphik/Graphik-Thin.otf") format("opentype");
+}
+@font-face {
+    font-family: Graphik-Medium;
+    src: url("fonts/Graphik/Graphik-Medium.otf") format("opentype");
+}
+@font-face {
+    font-family: Graphik-Bold;
+    src: url("fonts/Graphik/Graphik-Bold.otf") format("opentype");
+}
+body{
+    font-family: Graphik-Medium;
+    margin:0;
+    padding:0;
+    font-size: 2.5rem;
+    color: #FFFFFF;
+}
+.nownext, .time{
+    text-transform: uppercase;
+    font-family: Graphik-Bold;
+}
+.app{
+    display: none;
+}
+.panel{
+    width: 50%;
+    height: 100%;
+    float: left;
+    background: #27AD60;
+}
+.event{
+    padding-top: 25%;
+    width: 80%;
+    margin: auto;
+}
+.event img{
+    margin: 6rem auto;
+    width: 80%;
+}
+.clear{
+    width: 100%;
+}
+.occupied{
+    background: #e74c3c;
+}
+.occupied-later{
+    background: #c0392b;
+}
+#authorize-button{
+    width: 34rem;
+    margin: auto;
+    display: block;
+    padding: 3rem;
+    font-size: 2rem;
+    margin-top: 20%;
+    background: #e74c3c;
+    border: none;
+    color: #FFF;
+}

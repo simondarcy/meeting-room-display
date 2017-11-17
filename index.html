@@ -1,0 +1,97 @@
+<html>
+<head>
+    <title>Google Calendar JS API - Meeting Room Hack</title>
+    <link rel="stylesheet" href="css/style.css?v=9"/>
+</head>
+<body>
+
+
+<div id="authorize-div" style="display: none">
+    <!--Button for the user to click to initiate auth sequence -->
+    <button id="authorize-button" onclick="handleAuthClick(event)">
+        Hey there, A RT&Eacute; Google Login is required to display this calendar. Click here to login.
+    </button>
+</div>
+
+<div class="app" ng-controller="scheduleCtrl">
+
+    <!-- Scenario 1: next meeting not in the next 8 hours -->
+    <div ng-if="clear" class="clear">
+        <div class="panel">
+            <div class="event">
+                <p class="nownext">NOW</p>
+                <h1>No meeting for ages</h1>
+                <p class="time">Until {{ now.start.dateTime | date:"EEE MMM d @ h:mma" }}</p>
+                <p class="attendees">{{ now.creator.displayName }} + {{ now.attendees.length-2 }} others</p>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="event">
+                <img src="img/emojis.png"/>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scenario 2: meeting room free for next X hrs/mins -->
+    <div ng-if="!now.occupied && !clear">
+
+        <div class="panel">
+            <div class="event">
+                <p class="nownext">NOW</p>
+                <h1 ng-if="now.occupied!=true" class="heading">Free for {{ now.remaining }}</h1>
+                <p ng-if="now.occupied!=true" class="time">Until {{ now.start.dateTime | date:"h:mma" }}</p>
+            </div>
+        </div>
+
+        <div class="panel occupied">
+            <div class="event">
+                <p class="nownext">NEXT</p>
+                <h1 class="heading">Booked for {{ now.duration }}</h1>
+                <p class="time">{{ now.start.dateTime | date:"h:mma" }} - {{ now.end.dateTime | date:"h:mma" }}</p>
+                <p class="attendees">{{ now.creator.displayName }} + {{ now.attendees.length-2 }} others</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scenario 3: meeting room currently booked -->
+    <div ng-if="now.occupied && !clear">
+
+        <div class="panel occupied">
+            <div class="event">
+                <p class="nownext">Now</p>
+                <h1 class="heading">Booked for {{ now.remaining }}</h1>
+                <p class="time">{{ now.start.dateTime | date:"h:mma" }} - {{ now.end.dateTime | date:"h:mma" }}</p>
+                <p class="attendees">{{ now.creator.displayName }} + {{ now.attendees.length-2 }} others</p>
+            </div>
+        </div>
+
+
+        <div class="panel free" ng-class="(now.occupied==true && next.occupied==true) ? 'occupied-later':'free'" ng-class="(next.occupied==true) ? 'occupied':'free'" >
+            <div class="event">
+                <p class="nownext">Next</p>
+                <h1 ng-if="!next.occupied" class="heading">Room free until {{ next.start.dateTime | date:"h:mma" }}</h1>
+                <h1 ng-if="next.occupied" class="heading">Booked for {{ next.duration }}</h1>
+                <p class="time">{{ next.start.dateTime | date:"h:mma" }} - {{ next.end.dateTime | date:"h:mma" }}</p>
+                <p class="attendees">{{ next.creator.displayName }} + {{ next.attendees.length-2 }} others</p>
+            </div>
+         </div>
+
+    </div>
+
+
+    </div>
+
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular.min.js"></script>
+<script src="js/script-angular.js?v=9"></script>
+<script src="js/auth.js"></script>
+<script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+
+
+ </body>
+</html>
